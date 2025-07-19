@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TextQRcode – Online Text to QR Code Generator</title>
+  <meta name="description" content="TextQRcode by Bocaletto Luca – Instantly convert text or URLs into QR Codes. Free, fast, and easy to use.">
+  <meta name="author" content="Bocaletto Luca">
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="TextQRcode, QR code generator, text to QR, free online QR, Bocaletto Luca">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://bocaletto-luca.github.io/TextQRcode/index.html"/>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="TextQRcode – Online Text to QR Code Generator"/>
+  <meta property="og:description" content="Convert any text or URL into a QR Code instantly with TextQRcode by Bocaletto Luca."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://bocaletto-luca.github.io/TextQRcode/index.html"/>
+  <meta property="og:site_name" content="TextQRcode"/>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TextQRcode",
+    "url": "https://bocaletto-luca.github.io/TextQRcode/index.html",
+    "description": "TextQRcode by Bocaletto Luca – Instantly convert text or URLs into QR Codes.",
+    "creator": {
+      "@type": "Person",
+      "name": "Bocaletto Luca",
+      "url": "https://github.com/bocaletto-luca"
+    },
+    "applicationCategory": "Utilities"
+  }
+  </script>
+
+  <!-- Styles -->
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: #00509e;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    main {
+      flex: 1;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    .controls {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    button {
+      flex: 1;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 4px;
+      background: #00509e;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #003f7d;
+    }
+    #qrcode {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 256px;
+      background: #fafafa;
+      border: 1px dashed #ccc;
+      border-radius: 6px;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #00509e;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: underline;
+    }
+  </style>
+
+  <!-- QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>TextQRcode</h1>
+    <p>Free Online Text to QR Code Generator</p>
+  </header>
+
+  <main>
+    <textarea id="editor" placeholder="Type or paste your text or URL here…"></textarea>
+    <div class="controls">
+      <button id="btnGenerate">Generate QR</button>
+      <button id="btnClear">Clear</button>
+    </div>
+    <div id="qrcode"></div>
+  </main>
+
+  <footer>
+    © 2025 Bocaletto Luca | 
+    <a href="https://github.com/bocaletto-luca" target="_blank" rel="noopener">GitHub: bocaletto-luca</a> | 
+    <a href="https://github.com/bocaletto-luca/TextQRcode" target="_blank" rel="noopener">Repository: TextQRcode</a>
+  </footer>
+
+  <!-- App Logic -->
+  <script>
+    const editor      = document.getElementById('editor');
+    const btnGenerate = document.getElementById('btnGenerate');
+    const btnClear    = document.getElementById('btnClear');
+    const qrContainer = document.getElementById('qrcode');
+    let qrInstance;
+
+    btnGenerate.addEventListener('click', () => {
+      const text = editor.value.trim();
+      if (!text) {
+        alert('Please enter some text or a URL.');
+        return;
+      }
+      qrContainer.innerHTML = ''; // clear previous
+      qrInstance = new QRCode(qrContainer, {
+        text: text,
+        width: 256,
+        height: 256,
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    });
+
+    btnClear.addEventListener('click', () => {
+      editor.value = '';
+      qrContainer.innerHTML = '';
+      if (qrInstance) qrInstance.clear();
+    });
+  </script>
+</body>
+</html>
